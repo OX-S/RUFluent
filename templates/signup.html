@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+
+<body>
+<head>
+    <script src="https://www.gstatic.com/firebasejs/9.6.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.3/firebase-firestore.js"></script>
+    <title>Sign Up</title>
+</head>
+     <h2>Sign Up</h2>
+    {% if error_message %}
+    <p style="color: red;">{{ error_message }}</p>
+    {% endif %}
+    <form id="signupForm" action="/signuprequest" method="post">
+        <label for="username">Username:</label><br>
+        <input type="text" id="username" name="username" required><br>
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email" required><br>
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password" required><br><br>
+        <div id="languageProficiencyFields">
+            <div>
+                <label for="language">Language:</label>
+                <select name="language[]" required>
+        <option value="English">English</option>
+                        <option value="Spanish">Spanish</option>
+                        <option value="French">French</option>
+                        <option value="German">German</option>
+                        <option value="Italian">Italian</option>
+                        <option value="Portuguese">Portuguese</option>
+                        <option value="Russian">Russian</option>
+                        <option value="Chinese">Chinese</option>
+                        <option value="Japanese">Japanese</option>
+                        <option value="Korean">Korean</option>
+                        <option value="Arabic">Arabic</option>
+                        <option value="Hindi">Hindi</option>
+                        <option value="Bengali">Bengali</option>
+                        <option value="Urdu">Urdu</option>
+                        <option value="Turkish">Turkish</option>
+                        <option value="Vietnamese">Vietnamese</option>
+                        <option value="Thai">Thai</option>
+                        <option value="Dutch">Dutch</option>
+                        <option value="Swedish">Swedish</option>
+                        <option value="Norwegian">Norwegian</option>
+                        <option value="Danish">Danish</option>
+                        <option value="Finnish">Finnish</option>
+                        <option value="Greek">Greek</option>
+                        <option value="Polish">Polish</option>
+                        <option value="Czech">Czech</option>
+                </select>
+                <label for="proficiency">Proficiency:</label>
+                <select name="proficiency[]" required>
+                    <option value="Beginner">Beginner</option>
+                    <option value="Intermediate">Intermediate</option>
+                    <option value="Advanced">Advanced</option>
+                </select>
+            </div>
+        </div>
+        <button type="button" onclick="addLanguageField()">Add Language</button><br><br>
+        <button type="submit">Sign Up</button>
+    </form>
+
+    <script>
+        // Initialize Firebase
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+
+        // Function to add language proficiency fields dynamically
+        function addLanguageField() {
+            const languageProficiencyFields = document.getElementById('languageProficiencyFields');
+            const languageField = document.createElement('div');
+            languageField.innerHTML = `
+                <div>
+                    <label for="language">Language:</label>
+                    <select name="language[]" required>
+                        <option value="English">English</option>
+                        <option value="Spanish">Spanish</option>
+                        <option value="French">French</option>
+                        <option value="German">German</option>
+                        <option value="Italian">Italian</option>
+                        <option value="Portuguese">Portuguese</option>
+                        <option value="Russian">Russian</option>
+                        <option value="Chinese">Chinese</option>
+                        <option value="Japanese">Japanese</option>
+                        <option value="Korean">Korean</option>
+                        <option value="Arabic">Arabic</option>
+                        <option value="Hindi">Hindi</option>
+                        <option value="Bengali">Bengali</option>
+                        <option value="Urdu">Urdu</option>
+                        <option value="Turkish">Turkish</option>
+                        <option value="Vietnamese">Vietnamese</option>
+                        <option value="Thai">Thai</option>
+                        <option value="Dutch">Dutch</option>
+                        <option value="Swedish">Swedish</option>
+                        <option value="Norwegian">Norwegian</option>
+                        <option value="Danish">Danish</option>
+                        <option value="Finnish">Finnish</option>
+                        <option value="Greek">Greek</option>
+                        <option value="Polish">Polish</option>
+                        <option value="Czech">Czech</option>
+
+                    </select>
+                    <label for="proficiency">Proficiency:</label>
+                    <select name="proficiency[]" required>
+                        <option value="Beginner">Beginner</option>
+                        <option value="Intermediate">Intermediate</option>
+                        <option value="Advanced">Advanced</option>
+                    </select>
+                </div>
+            `;
+            languageProficiencyFields.appendChild(languageField);
+        }
+    </script>
+</body>
+
+{% endblock %}
