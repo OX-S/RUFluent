@@ -38,7 +38,7 @@ def loginrequest():
         # Sign in user with Firebase email/password authentication
         user = auth.get_user_by_email(email)
         session['user_uid'] = user.uid
-        return redirect('/profile')
+        return redirect('/language_select')
     except:
         return redirect('/login')
 
@@ -76,7 +76,7 @@ def signuprequest():
 
     session['user_uid'] = uid
 
-    return redirect('/profile')
+    return redirect('/language_select')
 
 
 @app.route('/profile')
@@ -93,6 +93,38 @@ def profile():
 def logout():
     session.pop('user_uid', None)
     return redirect('/')
+
+
+@app.route('/language_select')
+def language_select():
+    user_uid = session.get('user_uid')
+    if user_uid:
+        db = firestore.client()
+
+        user_ref = db.collection('users').document(user_uid)
+        user = user_ref.get().to_dict()
+        languages = user.get('languages')
+        return render_template('language_select.html', email=user.get('email'), languages=languages)
+
+    else:
+        return redirect('/')
+
+
+@app.route('/save-language', methods=['POST'])
+def save_language():
+    language = request.json.get('language')
+    session['selected_language'] = language
+    return '', 200  # Empty response with status code 200
+
+
+@app.route('/menu')
+def menu():
+    selected_language = session.get('selected_language')
+    if selected_language:
+        # Do something with the selected language
+        return 'Selected language: ' + selected_language
+    else:
+        return 'No language selected'
 
 
 

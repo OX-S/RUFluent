@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Select Languages{% endblock %}
+
+
+{% block content %}
+
+<body>
+    <h2>Select Language</h2>
+    <div id="language-buttons">
+        {% for language in languages %}
+        <button class="language-button" onclick="selectLanguage('{{ language }}')">{{ language }}</button>
+        {% endfor %}
+    </div>
+<script>
+        // Function to handle language selection
+        function selectLanguage(language) {
+            // Store the selected language in the session
+            fetch('/save-language', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ language: language })
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Redirect to the next menu
+                    window.location.href = '/menu';
+                } else {
+                    console.error('Failed to save language:', response.statusText);
+                }
+            })
+            .catch(error => console.error('Error saving language:', error));
+        }
+    </script>
+</body>
+
+{% endblock %}
