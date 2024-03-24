@@ -17,3 +17,18 @@ body {
 .logo {
     width: 150px;
 }
+
+.logout {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+
+}
+
+.logout:hover {
+    color: #f0f0f0;
+
+}

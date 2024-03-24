@@ -25,14 +25,40 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="customModal" tabindex="-1" role="dialog" aria-labelledby="customModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="customModalLabel">Match Notification</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="modalMessage">Username has been notified of your interest in linking up.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script>
     var userProfilesString = "{{ user_profiles }}";
     var userProfiles = userProfilesString.replace(/&#39;/g, '"');
     console.log(userProfiles);
     userProfiles = JSON.parse(userProfiles);
 
+    // Pop up modal when user clicks "Yes"
+    document.getElementById('btn-yes').addEventListener('click', function() {
 
+        const username = document.querySelector('.card-title').innerText;
+
+        document.getElementById('modalMessage').innerText = username + " has been notified of your interest in syncing up.";
+
+        $('#customModal').modal('show');
+    });
 
     let currentIndex = 0;
 
@@ -67,6 +93,7 @@
             document.getElementById('profile-card').innerHTML = '<div class="card-body text-center"><p class="card-text">Out of profiles</p></div>';
         }
     }
+
 
     $(document).ready(function() {
         showProfile(currentIndex);

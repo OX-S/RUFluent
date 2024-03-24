@@ -142,7 +142,7 @@ def global_chat():
             print(messages)
 
     messages.reverse()
-    return render_template('global_chat.html', messages=messages, user_uid=user_uid)
+    return render_template('global_chat.html', messages=messages, user_uid=user_uid, selected_language=selected_language)
 
 
 @app.route('/send-message', methods=['POST'])

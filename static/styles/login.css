@@ -39,3 +39,6 @@
 .logo {
     width: 70%;
 }
+.logout {
+    display: none;
+}
