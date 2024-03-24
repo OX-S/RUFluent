@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from flask import Flask, render_template, request, redirect, session, jsonify
+from flask import Flask, render_template, request, redirect, session, jsonify, flash
 import firebase_admin
 from firebase_admin import credentials, auth, firestore
 
@@ -59,10 +59,15 @@ def signuprequest():
             display_name=username
         )
         uid = user.uid
-    except FirebaseAuthError as e:
-        # Handle error if user registration fails
+    except auth.EmailAlreadyExistsError:
+        # If the email is already in use, redirect back to signup with an error message
+        flash('The email address is already in use. Please try another email or log in.', 'error')
+        return redirect('/signup')
+    except Exception as e:
+        # For any other errors, adjust handling as needed
         print("Error creating user:", e)
-        return "Error creating user"
+        flash('An error occurred during registration. Please try again.', 'error')
+        return redirect('/signup')
 
     # Save user's information to Firestore and link with UID
     db = firestore.client()
@@ -207,3 +212,4 @@ def swipe():
 
 if __name__ == '__main__':
     app.run(debug=True, port=8000)
+
