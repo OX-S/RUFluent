@@ -1,0 +1,26 @@
+.container-fluid{
+    padding-top: 70px;
+}
+.btn {
+    margin: 15px;
+    height: 500px;
+    width: 300px;
+    background-color: #E02604;
+    border: none;
+/*    transition duration*/
+    transition: all 0.5s ease-in-out;
+
+
+
+
+}
+.btn:hover {
+    /*add code to expand on hover*/
+    background-color: #FF907C;
+    border-color: none;
+    border-radius: 15px;
+
+    transform: scale(1.02);
+
+}
+

@@ -2,8 +2,8 @@
 
 .login-body {
     background: linear-gradient(to bottom right, #ff4b2b, #ff416c);
-    padding-top: 40px;
-    height: 100vh; /* Full height */
+    padding-top: 100px;
+    height: 100vh;
     align-items: center;
     justify-content: center;
 }
@@ -11,28 +11,31 @@
 
 
 .bg-white {
-    background-color: #fff; /* White background for the login box */
+    background-color: #fff;
 }
 
 .rounded {
-    border-radius: 10px; /* Rounded corners */
 }
 
 .shadow-lg {
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Box shadow */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
 
 .form-label {
-    font-weight: bold; /* Bold font for form labels */
+    font-weight: bold;
 }
 
 .btn-primary {
-    background-color: #007bff; /* Primary button color */
-    border-color: #007bff; /* Button border color */
+    background-color: #007bff;
+    border-color: #007bff;
 }
 
 .btn-primary:hover {
-    background-color: #0056b3; /* Button color on hover */
-    border-color: #0056b3; /* Border color on hover */
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+.logo {
+    width: 70%;
 }

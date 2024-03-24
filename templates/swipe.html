@@ -3,7 +3,11 @@
 {% block content %}
 <link rel="stylesheet" href="{{ url_for('static', filename='styles/swipe.css') }}">
 <div class="container">
+
     <div class="swipe-container">
+        <div class="text-center">
+            <h2>Match with {{ selected_language }} Speaking Individuals</h2>
+        </div>
         <div class="card" id="profile-card">
             <div class="profile-photo">
                 <img src="{{ url_for('static', filename='assets/default_profile.png') }}" alt="Default Profile Image">

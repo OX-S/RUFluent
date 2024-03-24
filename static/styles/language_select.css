@@ -1,23 +1,28 @@
 /* Custom CSS */
+body {
+    margin-top: 40px;
+}
+h2 {
+    color: white;
+    font-size: 50px;
+}
 .language-button {
-    background-color: #FF907C; /* Set button color */
-    border-color: #E02604; /* Set button border color */
+    background-color: #FF907C;
+    border-color: #E02604;
     border-radius: 0;
 
     width: 100%;
     height: 100px;
-    padding: 20px; /* Adjust padding as needed */
-    font-size: 24px; /* Adjust font size as needed */
-    /*border-radius: 10px; !* Optional: Add border radius *!*/
-        transition: all 0.5s ease-in-out; /* Add transition for smooth hover effect */
+    padding: 20px;
+    font-size: 24px;
+        transition: all 0.5s ease-in-out;
 
 }
 
 .language-button:hover {
-    transform: scale(1.02); /* Expand the button on hover */
+    transform: scale(1.02);
         background-color: #65AFC8;
-        border-color: #086B8C; /* Set hover border color */
+        border-color: #086B8C;
     border-radius: 15px;
-/* Set hover background color */
 
 }

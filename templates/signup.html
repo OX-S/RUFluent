@@ -1,9 +1,6 @@
-{% block title %}Sign Up{% endblock %}
 
 {% block head %}
-    <!-- Link Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/signup.css') }}">
 {% endblock %}
 
@@ -12,13 +9,11 @@
     <div class="container-fluid h-100">
         <div class="row h-100 align-items-center justify-content-center">
             <div class="col-lg-4">
-                <!-- Logo -->
                 <div class="text-center mb-4">
-                    <img src="{{ url_for('static', filename='assets/logo.jpg') }}" alt="Logo" class="logo" id="dsfdsfdsfsd">
+                    <img src="{{ url_for('static', filename='assets/fluent.png') }}" alt="Logo" class="logo">
                 </div>
             </div>
             <div class="col-lg-4">
-                <!-- Sign Up Form -->
                 <div class="bg-white rounded shadow-lg p-4 signup-form">
                     <form id="signupForm" action="/signuprequest" method="post">
                         <h2 class="mb-4">Sign Up</h2>
@@ -38,32 +33,36 @@
                             <input type="password" class="form-control" id="password" name="password" required>
                         </div>
                         <div id="languageProficiencyFields" class="mb-3 row">
-                        <div class="col-sm-6">
-                            <label for="language" class="form-label">Language:</label>
-                            <select name="language[]" class="form-control" required>
-                                <option value="English">English</option>
-                                <option value="Spanish">Spanish</option>
-                                <option value="French">French</option>
-                                <option value="German">German</option>
-                                <option value="Mandarin">Mandarin</option>
-                                <option value="Hindi">Hindi</option>
-                                <option value="Arabic">Arabic</option>
-                                <option value="Python">Python</option>
-                                <option value="Russian">Russian</option>
-                            </select>
-                        </div>
-                        <div class="col-sm-6">
-                            <label for="proficiency" class="form-label">Proficiency:</label>
-                            <select name="proficiency[]" class="form-control" required>
-                                <option value="Beginner">Beginner</option>
-                                <option value="Intermediate">Intermediate</option>
-                                <option value="Advanced">Advanced</option>
-                            </select>
-                        </div>
+                            <div class="col-sm-6">
+                                <label for="language" class="form-label">Language:</label>
+                                <select name="language[]" class="form-control" required>
+                                    <option value="English">English</option>
+                                    <option value="Spanish">Spanish</option>
+                                    <option value="French">French</option>
+                                    <option value="German">German</option>
+                                    <option value="Mandarin">Mandarin</option>
+                                    <option value="Hindi">Hindi</option>
+                                    <option value="Arabic">Arabic</option>
+                                    <option value="Python">Python</option>
+                                    <option value="Russian">Russian</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="proficiency" class="form-label">Proficiency:</label>
+                                <select name="proficiency[]" class="form-control" required>
+                                    <option value="Beginner">Beginner</option>
+                                    <option value="Intermediate">Intermediate</option>
+                                    <option value="Advanced">Advanced</option>
+                                </select>
+                            </div>
                         </div>
                         <button type="button" class="btn btn-primary mb-3" onclick="addLanguageField()">Add Language</button>
+                        <button type="button" class="btn btn-danger mb-3" onclick="removeLanguageField(this)">Remove</button>
+
                         <button type="submit" class="btn btn-primary w-100">Sign Up</button>
                     </form>
+                    <p class="mt-3 text-center">Already have an account? <a href="/login">Log In</a></p>
+
                 </div>
             </div>
         </div>
@@ -110,6 +109,27 @@
                         </div>
             `;
             languageProficiencyFields.appendChild(languageField);
+
+            const removeButtons = document.querySelectorAll('.remove-btn');
+            if (removeButtons.length > 1) {
+                removeButtons.forEach(button => button.style.display = 'inline-block');
+            }
+
+        }
+
+
+        function removeLanguageField(button) {
+            const languageProficiencyFields = document.getElementById('languageProficiencyFields');
+
+            // Check if there's more than one language field
+            if (languageProficiencyFields.children.length > 2) {
+                languageProficiencyFields.removeChild(languageProficiencyFields.lastElementChild);
+            } else {
+                alert("At least one language field is required.");
+            }
+
+            const removeButton = document.getElementById('removeLanguageButton');
+            removeButton.style.display = languageProficiencyFields.children.length > 2 ? 'inline-block' : 'none';
         }
     </script>
 </body>

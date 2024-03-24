@@ -20,7 +20,7 @@
                         <input type="text" id="message-input" class="form-control chat-input" placeholder="Type your message..." required>
                     </div>
                     <div class="col-auto">
-                        <button type="submit" class="btn btn-primary chat-btn">Send</button>
+                        <button type="submit" onclick="fetchNewMessages( '{{ user_uid }}' )" class="btn btn-primary chat-btn">Send</button>
                     </div>
                 </div>
             </form>
@@ -55,13 +55,15 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 <script>function fetchNewMessages(user_uid) {
+        setTimeout(function() {
+            console.log('Fetching new messages...');
+        }, 1000);
 
         $.ajax({
             url: '/fetch-messages',
             method: 'GET',
             success: function(messages) {
-                // Replace the content of the chat container with the new messages
-                $('#chat').empty(); // Clear existing messages
+                $('#chat').empty();
                 messages.forEach(function(message) {
                     console.log(message);
                     const messageDiv = $('<div>').addClass('d-flex flex-column align-items-start');
@@ -73,8 +75,8 @@
                         usernameDiv.addClass('username-right');
                         bubbleDiv.addClass('bubble-right');
                     } else {
-                        usernameDiv.addClass('username-left'); // Add class for left-aligned username
-                        bubbleDiv.addClass('bubble-left'); // Add class for left-aligned message bubble
+                        usernameDiv.addClass('username-left');
+                        bubbleDiv.addClass('bubble-left');
                     }
                     messageDiv.append(usernameDiv, bubbleDiv);
                     $('#chat').append(messageDiv);
@@ -86,7 +88,6 @@
         });
     }
 
-    // Fetch new messages every 5 seconds
        setInterval(function() {
         fetchNewMessages('{{ user_uid }}');
     }, 5000);

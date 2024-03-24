@@ -7,9 +7,8 @@ from firebase_admin import credentials, auth, firestore
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 
-# Initialize Firebase Admin SDK
 cred = credentials.Certificate(
-    'rufluent-firebase-adminsdk-c5p1c-40e5294999.json')  # Replace with your service account key file
+    'rufluent-firebase-adminsdk-c5p1c-40e5294999.json')
 firebase_admin.initialize_app(cred)
 
 
@@ -34,7 +33,6 @@ def loginrequest():
     password = request.form['password']
 
     try:
-        # Sign in user with Firebase email/password authentication
         user = auth.get_user_by_email(email)
         session['user_uid'] = user.uid
         return redirect('/language_select')
@@ -50,7 +48,6 @@ def signuprequest():
     languages = request.form.getlist('language[]')
     proficiency = request.form.getlist('proficiency[]')
 
-    # Register user with Firebase Authentication
     try:
         user = auth.create_user(
             email=email,
@@ -60,11 +57,9 @@ def signuprequest():
         )
         uid = user.uid
     except auth.EmailAlreadyExistsError:
-        # If the email is already in use, redirect back to signup with an error message
         flash('The email address is already in use. Please try another email or log in.', 'error')
         return redirect('/signup')
     except Exception as e:
-        # For any other errors, adjust handling as needed
         print("Error creating user:", e)
         flash('An error occurred during registration. Please try again.', 'error')
         return redirect('/signup')
@@ -118,7 +113,7 @@ def language_select():
 def save_language():
     language = request.json.get('language')
     session['selected_language'] = language
-    return '', 200  # Empty response with status code 200
+    return '', 200
 
 
 @app.route('/menu')

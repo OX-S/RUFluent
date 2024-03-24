@@ -1,14 +1,17 @@
-/* signup.css */
 
 .signup-body {
     background: linear-gradient(to bottom right, #ff4b2b, #ff416c);
+    height: 100vh;
+
 }
 
 .signup-form {
+    margin-top: 40px;
+    margin-bottom: 40px;
     padding: 20px;
     border-radius: 10px;
     background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add shadow effect */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .signup-form h2 {
@@ -21,12 +24,14 @@
     font-weight: bold;
 }
 
-.signup-form .form-control {
+#languageProficiencyFields .form-control {
     margin-bottom: 15px;
 }
 
 .signup-form button[type="submit"] {
     font-weight: bold;
 }
+.logo {
+    width: 70%;
+}
 
-/* Additional styling as needed */

@@ -1,22 +1,28 @@
 .swipe-container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
+}
+h2 {
+    padding-top: 20px;
+    padding-bottom: 60px;
+    color: white;
 }
 
 .card {
     width: 300px;
     height: 420px;
     background-color: #fff;
+    padding-top: 20px;
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding-top: 20px;
-    overflow: hidden; /* Ensure content doesn't overflow */
+    overflow: hidden;
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Center content vertically */
-    align-items: center; /* Center content horizontally */
+    justify-content: center;
+    align-items: center;
 }
 .card-body {
     overflow-y: auto;
@@ -24,18 +30,18 @@
 }
 
 .card-content {
-    text-align: center; /* Center text within card */
+    text-align: center;
 }
 
 .profile-photo img {
-    width: 100px; /* Adjust size as needed */
-    height: 100px; /* Adjust size as needed */
-    border-radius: 50%; /* Make it a circle */
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
     object-fit: cover;
 }
 
 .empty-card-message {
-    text-align: center; /* Center text within card */
+    text-align: center;
 }
 .card-footer {
     width: 100%;

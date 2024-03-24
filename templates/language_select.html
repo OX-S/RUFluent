@@ -16,7 +16,6 @@
     </div>
 </div>
 <script>
-    // Function to handle language selection
     function selectLanguage(language) {
         // Store the selected language in the session
         fetch('/save-language', {
@@ -28,7 +27,6 @@
         })
         .then(response => {
             if (response.ok) {
-                // Redirect to the next menu
                 window.location.href = '/menu';
             } else {
                 console.error('Failed to save language:', response.statusText);
