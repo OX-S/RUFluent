@@ -197,6 +197,10 @@ def fetch_messages():
             if username:
                 message_data['username'] = username
             messages.append(message_data)
+        else:
+            username = 'Deleted User'
+            message_data['username'] = username
+            messages.append(message_data)
 
     return jsonify(messages), 200
 
@@ -204,14 +208,34 @@ def fetch_messages():
 @app.route('/swipe', methods=['GET'])
 def swipe():
     db = firestore.client()
-    selected_language = session.get('selected_language')  # Assuming language is stored in the session
-    users_ref = db.collection('users').where('languages_spoken', 'array_contains', selected_language)
-    user_profiles = [user.to_dict() for user in users_ref.stream()]
-    if user_profiles:
-        initial_profile = user_profiles[0]  # Assuming you want to load the first profile matching the language
-        return render_template('swipe.html', initial_profile=initial_profile)
-    else:
-        return render_template('swipe.html', initial_profile=None)
+    selected_language = session.get('selected_language')
+    users_ref = db.collection('users')
+
+    user_profiles = []
+
+    for user in users_ref.stream():
+        user_data = user.to_dict()
+        if user_data.get('languages', {}).get(selected_language):
+            print(user.id, session.get('user_uid'))
+            if user.id != session.get('user_uid'):
+                user_profiles.append(user_data)
+
+    print(user_profiles)
+    # Convert user profiles to JSON
+    user_profiles_json = {
+        'users': []
+    }
+
+    for user in user_profiles:
+        user_profiles_json['users'].append({
+            'username': user.get('username'),
+            'languages': user.get('languages'),
+            'bio': user.get('bio', "null")
+        })
+
+    user_profiles_json = user_profiles_json if user_profiles else None
+
+    return render_template('swipe.html', user_profiles=user_profiles_json, selected_language=selected_language)
 
 
 if __name__ == '__main__':

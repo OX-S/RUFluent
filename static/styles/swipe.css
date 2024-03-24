@@ -2,20 +2,25 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Ensure the container fills the viewport height */
+    height: 100vh;
 }
 
 .card {
-    width: 300px; /* Set fixed width */
-    height: 400px; /* Set fixed height */
+    width: 300px;
+    height: 420px;
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding-top: 20px;
     overflow: hidden; /* Ensure content doesn't overflow */
     display: flex;
     flex-direction: column;
     justify-content: center; /* Center content vertically */
     align-items: center; /* Center content horizontally */
+}
+.card-body {
+    overflow-y: auto;
+
 }
 
 .card-content {
@@ -32,7 +37,7 @@
 .empty-card-message {
     text-align: center; /* Center text within card */
 }
-
-.btn {
-    margin-top: 20px; /* Add margin to buttons for spacing */
+.card-footer {
+    width: 100%;
 }
+

@@ -4,37 +4,80 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='styles/swipe.css') }}">
 <div class="container">
     <div class="swipe-container">
-        <div class="card">
-            {% if initial_profile %}
-                <div class="profile-photo">
-                    {% if initial_profile['profile_photo'] %}
-                        <img src="{{ initial_profile['profile_photo'] }}" alt="Profile Image">
-                    {% else %}
-                        <img src="default_profile_photo.jpg" alt="Default Profile Image">
-                    {% endif %}
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">{{ initial_profile['name'] }}</h5>
-                    {% if initial_profile['bio'] %}
-                        <p class="card-text">Bio: {{ initial_profile['bio'] }}</p>
-                    {% else %}
-                        <p class="card-text">Bio: No bio filled</p>
-                    {% endif %}
-                    <p class="card-text">Languages Spoken: {{ ', '.join(initial_profile['languages_spoken']) }}</p>
-                    <p class="card-text">Proficiency Level: {{ initial_profile['proficiency_level'] }}</p>
-                </div>
-                <div class="card-footer">
-                    <button type="button" class="btn btn-danger float-left">No</button>
-                    <button type="button" class="btn btn-success float-right">Yes</button>
-                </div>
-            {% else %}
-                <div class="card-body text-center">
-                    <p class="card-text">Out of profiles</p>
-                </div>
-            {% endif %}
+        <div class="card" id="profile-card">
+            <div class="profile-photo">
+                <img src="{{ url_for('static', filename='assets/default_profile.png') }}" alt="Default Profile Image">
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Profile Name</h5>
+                <p class="card-text">Bio: You shouldn't be seeing this</p>
+                <p class="card-text">Languages Spoken: </p>
+                <p class="card-text">{{ selected_language }} Level: </p>
+            </div>
+            <div class="card-footer">
+                <button type="button" class="btn btn-danger float-left" id="btn-no">No</button>
+                <button type="button" class="btn btn-success float-right" id="btn-yes">Yes</button>
+            </div>
         </div>
     </div>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    var userProfilesString = "{{ user_profiles }}";
+    var userProfiles = userProfilesString.replace(/&#39;/g, '"');
+    console.log(userProfiles);
+    userProfiles = JSON.parse(userProfiles);
+
+
+
+    let currentIndex = 0;
+
+    console.log("hi");
+
+    function showProfile(index) {
+        const profile = userProfiles["users"][index];
+        console.log(profile);
+        if (profile) {
+            const languagesArray = Object.keys(profile.languages);
+            const languagesString = "Languages Spoken: " + languagesArray.join(", ");
+            // Update card content with profile data
+            document.querySelector('.card-title').textContent = profile.username;
+            if (profile.bio === "null") {
+                document.querySelectorAll('.card-text')[0].textContent = "Bio: No bio set";
+            } else {
+                document.querySelectorAll('.card-text')[0].textContent = "Bio: " + profile.bio;
+            }
+
+            document.querySelectorAll('.card-text')[1].textContent = languagesString;
+            document.querySelectorAll('.card-text')[2].textContent = "{{ selected_language }} Level: " + profile.languages["{{ selected_language }}"];
+
+            // Update profile photo (if available)
+            const profilePhoto = document.querySelector('.profile-photo img');
+            if (profile.profile_photo) {
+                profilePhoto.src = profile.profile_photo;
+            } else {
+                profilePhoto.src = "{{ url_for('static', filename='assets/default_profile.png') }}"; // Default profile photo
+            }
+        } else {
+            // No more profiles to show
+            document.getElementById('profile-card').innerHTML = '<div class="card-body text-center"><p class="card-text">Out of profiles</p></div>';
+        }
+    }
+
+    $(document).ready(function() {
+        showProfile(currentIndex);
+
+        $('#btn-no').click(function() {
+            currentIndex++;
+            showProfile(currentIndex);
+        });
+
+        $('#btn-yes').click(function() {
+            currentIndex++;
+            showProfile(currentIndex);
+        });
+    });
+</script>
 
 
 
