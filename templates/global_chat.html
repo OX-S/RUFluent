@@ -1,18 +1,31 @@
 {% extends "base.html" %}
-{% block title %}Global Chat{% endblock %}
 
 {% block content %}
+<link style="text/css" rel="stylesheet" href="{{ url_for('static', filename='styles/global_chat.css') }}">
 <div class="container">
-    <h2>Global Chat</h2>
     <div id="chat-messages">
-        {% for message in messages %}
-            <p>{{ message }}</p>
-        {% endfor %}
+        <div id="chat-container" class="container">
+            <h1 class="mt-5 mb-4 text-center">Global Chat</h1>
+            <div id="chat" class="scrollable-chat">
+                {% for message in messages %}
+                    <div class="d-flex flex-column align-items-start">
+                        <div class="username {% if message.user_id == user_uid %}username-right{% endif %}">{{ message.username }}</div>
+                        <div class="bubble {% if message.user_id == user_uid %}bubble-right{% endif %}">{{ message.message }}</div>
+                    </div>
+                {% endfor %}
+            </div>
+            <form id="chat-form" class="mt-4">
+                <div class="row">
+                    <div class="col">
+                        <input type="text" id="message-input" class="form-control chat-input" placeholder="Type your message..." required>
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-primary chat-btn">Send</button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
-    <form id="chat-form">
-        <input type="text" id="message-input" placeholder="Type your message..." required>
-        <button type="submit">Send</button>
-    </form>
 </div>
 
 <script>
@@ -38,5 +51,45 @@
             .catch(error => console.error('Error sending message:', error));
         }
     });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script>function fetchNewMessages(user_uid) {
+
+        $.ajax({
+            url: '/fetch-messages',
+            method: 'GET',
+            success: function(messages) {
+                // Replace the content of the chat container with the new messages
+                $('#chat').empty(); // Clear existing messages
+                messages.forEach(function(message) {
+                    console.log(message);
+                    const messageDiv = $('<div>').addClass('d-flex flex-column align-items-start');
+                    const usernameDiv = $('<div>').addClass('username').text(message.username);
+                    const bubbleDiv = $('<div>').addClass('bubble').text(message.text);
+
+                    console.log(message.user_id);
+                    if (message.user === user_uid) {
+                        usernameDiv.addClass('username-right');
+                        bubbleDiv.addClass('bubble-right');
+                    } else {
+                        usernameDiv.addClass('username-left'); // Add class for left-aligned username
+                        bubbleDiv.addClass('bubble-left'); // Add class for left-aligned message bubble
+                    }
+                    messageDiv.append(usernameDiv, bubbleDiv);
+                    $('#chat').append(messageDiv);
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching messages:', error);
+            }
+        });
+    }
+
+    // Fetch new messages every 5 seconds
+       setInterval(function() {
+        fetchNewMessages('{{ user_uid }}');
+    }, 5000);
+
 </script>
 {% endblock %}

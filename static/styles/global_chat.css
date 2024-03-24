@@ -1,0 +1,51 @@
+.container {
+    height: 100%;
+    margin-bottom: 50px;
+    padding-bottom: 0;
+}
+
+#chat-container {
+    max-width: 800px;
+    margin: auto;
+
+}
+
+/* Speech bubble style */
+.bubble {
+    position: relative;
+    background-color: #e9ecef;
+    border-radius: 15px;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    max-width: 70%;
+}
+
+/* Right align bubble for user's own messages */
+.bubble-right {
+    background-color: #3D93B0;
+    color: white;
+    align-self: flex-end;
+}
+
+/* Username style */
+.username {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.username-right {
+        align-self: flex-end;
+
+}
+.scrollable-chat {
+    max-height: 460px; /* Adjust as needed */
+    overflow-y: auto;
+}
+.chat-btn {
+    background-color: #5DA000;
+    border-color: #5DA000;
+}
+.chat-btn:hover {
+    background-color: #4C8000; /* Change the background color on hover (optional) */
+    border-color: #4C8000; /* Change the border color on hover (optional) */
+}

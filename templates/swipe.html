@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/swipe.css') }}">
+<div class="container">
+    <div class="swipe-container">
+        <div class="card">
+            <img src="profile1.jpg" class="card-img-top" alt="Profile Image">
+            <div class="card-body">
+                <h5 class="card-title">Profile Name 1</h5>
+                <p class="card-text">Bio: Some information about the profile...</p>
+                <p class="card-text">Languages Spoken: English, Spanish</p>
+                <p class="card-text">Proficiency Level: Intermediate</p>
+            </div>
+            <div class="card-footer">
+                <button type="button" class="btn btn-danger float-left">No</button>
+                <button type="button" class="btn btn-success float-right">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
