@@ -120,12 +120,18 @@ def save_language():
 @app.route('/menu')
 def menu():
     selected_language = session.get('selected_language')
-    if selected_language:
-        # Do something with the selected language
-        return 'Selected language: ' + selected_language
-    else:
-        return 'No language selected'
+    return render_template('menu.html', selected_language=selected_language)
 
+@app.route('/global-chat')
+def global_chat():
+    user_uid = session.get('user_uid')
+    if not user_uid:
+        return redirect('/')
+    db = firestore.client()
+    messages_ref = db.collection('messages').order_by('timestamp', direction='desc').limit(10)
+    messages = [message.to_dict()['text'] for message in messages_ref.stream()]
+    messages.reverse()
+    return render_template('global_chat.html', messages=messages)
 
 
 if __name__ == '__main__':

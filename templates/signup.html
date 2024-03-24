@@ -1,67 +1,66 @@
-{% extends "base.html" %}
+{% block title %}Sign Up{% endblock %}
 
-{% block title %}Login{% endblock %}
+{% block head %}
+    <!-- Link Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/signup.css') }}">
+{% endblock %}
 
 {% block content %}
-
-<body>
-<head>
-    <script src="https://www.gstatic.com/firebasejs/9.6.3/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.3/firebase-firestore.js"></script>
-    <title>Sign Up</title>
-</head>
-     <h2>Sign Up</h2>
-    {% if error_message %}
-    <p style="color: red;">{{ error_message }}</p>
-    {% endif %}
-    <form id="signupForm" action="/signuprequest" method="post">
-        <label for="username">Username:</label><br>
-        <input type="text" id="username" name="username" required><br>
-        <label for="email">Email:</label><br>
-        <input type="email" id="email" name="email" required><br>
-        <label for="password">Password:</label><br>
-        <input type="password" id="password" name="password" required><br><br>
-        <div id="languageProficiencyFields">
-            <div>
-                <label for="language">Language:</label>
-                <select name="language[]" required>
-        <option value="English">English</option>
-                        <option value="Spanish">Spanish</option>
-                        <option value="French">French</option>
-                        <option value="German">German</option>
-                        <option value="Italian">Italian</option>
-                        <option value="Portuguese">Portuguese</option>
-                        <option value="Russian">Russian</option>
-                        <option value="Chinese">Chinese</option>
-                        <option value="Japanese">Japanese</option>
-                        <option value="Korean">Korean</option>
-                        <option value="Arabic">Arabic</option>
-                        <option value="Hindi">Hindi</option>
-                        <option value="Bengali">Bengali</option>
-                        <option value="Urdu">Urdu</option>
-                        <option value="Turkish">Turkish</option>
-                        <option value="Vietnamese">Vietnamese</option>
-                        <option value="Thai">Thai</option>
-                        <option value="Dutch">Dutch</option>
-                        <option value="Swedish">Swedish</option>
-                        <option value="Norwegian">Norwegian</option>
-                        <option value="Danish">Danish</option>
-                        <option value="Finnish">Finnish</option>
-                        <option value="Greek">Greek</option>
-                        <option value="Polish">Polish</option>
-                        <option value="Czech">Czech</option>
-                </select>
-                <label for="proficiency">Proficiency:</label>
-                <select name="proficiency[]" required>
-                    <option value="Beginner">Beginner</option>
-                    <option value="Intermediate">Intermediate</option>
-                    <option value="Advanced">Advanced</option>
-                </select>
+<body class="signup-body">
+    <div class="container-fluid h-100">
+        <div class="row h-100 align-items-center justify-content-center">
+            <div class="col-lg-4">
+                <!-- Logo -->
+                <div class="text-center mb-4">
+                    <img src="{{ url_for('static', filename='assets/logo.jpg') }}" alt="Logo" class="logo">
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <!-- Sign Up Form -->
+                <div class="bg-white rounded shadow-lg p-4 signup-form">
+                    <form id="signupForm" action="/signuprequest" method="post">
+                        <h2 class="mb-4">Sign Up</h2>
+                        {% if error_message %}
+                            <p class="text-danger">{{ error_message }}</p>
+                        {% endif %}
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username:</label>
+                            <input type="text" class="form-control" id="username" name="username" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email:</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password:</label>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                        </div>
+                        <div id="languageProficiencyFields" class="mb-3 row">
+                        <div class="col-sm-6">
+                            <label for="language" class="form-label">Language:</label>
+                            <select name="language[]" class="form-control" required>
+                                <option value="English">English</option>
+                                <!-- Add more language options as needed -->
+                            </select>
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="proficiency" class="form-label">Proficiency:</label>
+                            <select name="proficiency[]" class="form-control" required>
+                                <option value="Beginner">Beginner</option>
+                                <option value="Intermediate">Intermediate</option>
+                                <option value="Advanced">Advanced</option>
+                            </select>
+                        </div>
+                        </div>
+                        <button type="button" class="btn btn-primary mb-3" onclick="addLanguageField()">Add Language</button>
+                        <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+                    </form>
+                </div>
             </div>
         </div>
-        <button type="button" onclick="addLanguageField()">Add Language</button><br><br>
-        <button type="submit">Sign Up</button>
-    </form>
+    </div>
 
     <script>
         // Initialize Firebase
@@ -76,48 +75,24 @@
 
         firebase.initializeApp(firebaseConfig);
 
-        // Function to add language proficiency fields dynamically
         function addLanguageField() {
             const languageProficiencyFields = document.getElementById('languageProficiencyFields');
             const languageField = document.createElement('div');
+            languageField.classList.add('mb-3', 'row'); // Add Bootstrap classes for spacing and grid layout
             languageField.innerHTML = `
-                <div>
-                    <label for="language">Language:</label>
-                    <select name="language[]" required>
-                        <option value="English">English</option>
-                        <option value="Spanish">Spanish</option>
-                        <option value="French">French</option>
-                        <option value="German">German</option>
-                        <option value="Italian">Italian</option>
-                        <option value="Portuguese">Portuguese</option>
-                        <option value="Russian">Russian</option>
-                        <option value="Chinese">Chinese</option>
-                        <option value="Japanese">Japanese</option>
-                        <option value="Korean">Korean</option>
-                        <option value="Arabic">Arabic</option>
-                        <option value="Hindi">Hindi</option>
-                        <option value="Bengali">Bengali</option>
-                        <option value="Urdu">Urdu</option>
-                        <option value="Turkish">Turkish</option>
-                        <option value="Vietnamese">Vietnamese</option>
-                        <option value="Thai">Thai</option>
-                        <option value="Dutch">Dutch</option>
-                        <option value="Swedish">Swedish</option>
-                        <option value="Norwegian">Norwegian</option>
-                        <option value="Danish">Danish</option>
-                        <option value="Finnish">Finnish</option>
-                        <option value="Greek">Greek</option>
-                        <option value="Polish">Polish</option>
-                        <option value="Czech">Czech</option>
-
-                    </select>
-                    <label for="proficiency">Proficiency:</label>
-                    <select name="proficiency[]" required>
-                        <option value="Beginner">Beginner</option>
-                        <option value="Intermediate">Intermediate</option>
-                        <option value="Advanced">Advanced</option>
-                    </select>
-                </div>
+               <div class="col-sm-6">
+                            <select name="language[]" class="form-control" required>
+                                <option value="English">English</option>
+                                <!-- Add more language options as needed -->
+                            </select>
+                        </div>
+                        <div class="col-sm-6">
+                            <select name="proficiency[]" class="form-control" required>
+                                <option value="Beginner">Beginner</option>
+                                <option value="Intermediate">Intermediate</option>
+                                <option value="Advanced">Advanced</option>
+                            </select>
+                        </div>
             `;
             languageProficiencyFields.appendChild(languageField);
         }

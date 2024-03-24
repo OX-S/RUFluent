@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Global Chat{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Global Chat</h2>
+    <div id="chat-messages">
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    </div>
+    <form id="chat-form">
+        <input type="text" id="message-input" placeholder="Type your message..." required>
+        <button type="submit">Send</button>
+    </form>
+</div>
+
+<script>
+    // Function to submit a chat message
+    document.getElementById('chat-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const messageInput = document.getElementById('message-input').value.trim();
+        if (messageInput !== '') {
+            fetch('/send-message', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ message: messageInput })
+            })
+            .then(response => {
+                if (response.ok) {
+                    document.getElementById('message-input').value = '';
+                } else {
+                    console.error('Failed to send message:', response.statusText);
+                }
+            })
+            .catch(error => console.error('Error sending message:', error));
+        }
+    });
+</script>
+{% endblock %}
