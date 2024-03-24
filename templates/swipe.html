@@ -5,21 +5,37 @@
 <div class="container">
     <div class="swipe-container">
         <div class="card">
-            <img src="profile1.jpg" class="card-img-top" alt="Profile Image">
-            <div class="card-body">
-                <h5 class="card-title">Profile Name 1</h5>
-                <p class="card-text">Bio: Some information about the profile...</p>
-                <p class="card-text">Languages Spoken: English, Spanish</p>
-                <p class="card-text">Proficiency Level: Intermediate</p>
-            </div>
-            <div class="card-footer">
-                <button type="button" class="btn btn-danger float-left">No</button>
-                <button type="button" class="btn btn-success float-right">Yes</button>
-            </div>
-
+            {% if initial_profile %}
+                <div class="profile-photo">
+                    {% if initial_profile['profile_photo'] %}
+                        <img src="{{ initial_profile['profile_photo'] }}" alt="Profile Image">
+                    {% else %}
+                        <img src="default_profile_photo.jpg" alt="Default Profile Image">
+                    {% endif %}
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ initial_profile['name'] }}</h5>
+                    {% if initial_profile['bio'] %}
+                        <p class="card-text">Bio: {{ initial_profile['bio'] }}</p>
+                    {% else %}
+                        <p class="card-text">Bio: No bio filled</p>
+                    {% endif %}
+                    <p class="card-text">Languages Spoken: {{ ', '.join(initial_profile['languages_spoken']) }}</p>
+                    <p class="card-text">Proficiency Level: {{ initial_profile['proficiency_level'] }}</p>
+                </div>
+                <div class="card-footer">
+                    <button type="button" class="btn btn-danger float-left">No</button>
+                    <button type="button" class="btn btn-success float-right">Yes</button>
+                </div>
+            {% else %}
+                <div class="card-body text-center">
+                    <p class="card-text">Out of profiles</p>
+                </div>
+            {% endif %}
         </div>
     </div>
 </div>
+
 
 
 {% endblock %}

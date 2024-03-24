@@ -200,9 +200,18 @@ def fetch_messages():
 
     return jsonify(messages), 200
 
+
 @app.route('/swipe', methods=['GET'])
 def swipe():
-    return render_template('swipe.html')
+    db = firestore.client()
+    selected_language = session.get('selected_language')  # Assuming language is stored in the session
+    users_ref = db.collection('users').where('languages_spoken', 'array_contains', selected_language)
+    user_profiles = [user.to_dict() for user in users_ref.stream()]
+    if user_profiles:
+        initial_profile = user_profiles[0]  # Assuming you want to load the first profile matching the language
+        return render_template('swipe.html', initial_profile=initial_profile)
+    else:
+        return render_template('swipe.html', initial_profile=None)
 
 
 if __name__ == '__main__':

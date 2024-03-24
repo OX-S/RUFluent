@@ -38,7 +38,7 @@
 
 }
 .scrollable-chat {
-    max-height: 460px; /* Adjust as needed */
+    height: 460px;
     overflow-y: auto;
 }
 .chat-btn {
